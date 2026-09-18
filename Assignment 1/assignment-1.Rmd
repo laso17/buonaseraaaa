@@ -50,13 +50,14 @@ You can use the data set directly by importing the csv file in the repository.
 
 ***
 
-a) How many unique astronauts are stored in the data set? 565
+a) How many unique astronauts are stored in the data set? 564
 
 ```{r}
 # YOUR CODE HERE
+max(astronauts$number)
+n_distinct(astronauts$name)
 
 ```
-taking a look at the dataset I can see that the variable number already provides me with the number of astronauts, without duplicates, which is 565
 
 <br>
 
@@ -64,6 +65,14 @@ b) What's the overall share of female astronauts? And what's the share of astron
 
 ```{r}
 # YOUR CODE HERE
+
+distinct(astronauts, name, .keep_all = TRUE)
+astro_gender <- distinct(astronauts, name, .keep_all = TRUE)
+sum(astro_gender$sex == "female")
+
+distinct(astronauts, name, .keep_all = TRUE)
+astro_nation <- distinct(astronauts, name, .keep_all = TRUE)
+sum(astro_nation$nationality == "U.S.")
 ```
 
 <br>
@@ -72,6 +81,12 @@ c) Create a new data set `total_hours_df` containing the unique names and the to
 
 ```{r}
 # YOUR CODE HERE
+
+total_hours_df <- astronauts %>%
+  group_by(name) %>%
+  summarise(total_hrs_sum = sum(hours_mission, na.rm = TRUE))
+total_hours_df
+
 ```
 
 <br>
